@@ -1,0 +1,74 @@
+﻿@model QLNhanSu.Models.NhanVien
+@using QLNhanSu.Models
+
+@{
+    ViewBag.Title = "Chi tiết nhân viên";
+}
+
+<h2>Chi tiết nhân viên</h2>
+<br />
+<br />
+<br />
+<br />
+<div>
+    <div class="col-md-5">
+        @if (Model.ANHDAIDIEN != null)
+        {
+            @Html.Image("../../" + Model.ANHDAIDIEN, "", "300", "400")
+        }
+        else
+        {
+            @Html.Image("../../Images/default.png", "", "300", "400")
+        }
+    </div>
+    <div class="col-md-4">
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.HOTEN)</td>
+                    <td>@Html.DisplayFor(model => model.HOTEN)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.DANTOC)</td>
+                    <td>@Html.DisplayFor(model => model.DANTOC)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.GIOITINH)</td>
+                    <td>@Html.DisplayFor(model => model.GIOITINH)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.SODIENTHOAI)</td>
+                    <td>@Html.DisplayFor(model => model.SODIENTHOAI)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.QUEQUAN)</td>
+                    <td>@Html.DisplayFor(model => model.QUEQUAN)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.NGAYSINH)</td>
+                    <td>@Html.DisplayFor(model => model.NGAYSINH)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.ChucVu.TENCV)</td>
+                    <td>@Html.DisplayFor(model => model.ChucVu.TENCV)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.PhongBan.TENPB)</td>
+                    <td>@Html.DisplayFor(model => model.PhongBan.TENPB)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.TrinhDoHocVan.TENTRINHDO)</td>
+                    <td>@Html.DisplayFor(model => model.TrinhDoHocVan.TENTRINHDO)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.CHUYENNGANH)</td>
+                    <td>@Html.DisplayFor(model => model.CHUYENNGANH)</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <a href='@Url.Action("Edit", new { id = Model.MANV })' class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Cập nhật</a>
+        <a href='@Url.Action("Index")' class="btn btn-primary">Quay lại</a>
+    </div>
+</div>
+

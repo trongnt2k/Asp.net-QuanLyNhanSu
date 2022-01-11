@@ -1,0 +1,68 @@
+﻿@model PagedList.IPagedList<QLNhanSu.Models.NhanVien>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Nhân viên";
+}
+<h2>Nhân viên</h2>
+<br />
+
+<a class="btn btn-primary" href='@Url.Action("Create")'>Thêm nhân viên</a>
+<a class="btn btn-primary" href="#">Xuất danh sách nhân viên</a>
+<p></p>
+
+<table class="table table-bordered table-hover">
+    <tr class="bg-success">
+        <th>
+            Mã nhân viên
+        </th>
+        <th>
+            Họ tên
+        </th>
+        <th>
+            Trình độ học vấn
+        </th>
+        <th>
+            Giới tính
+        </th>
+        <th>
+            Ngày bắt đầu
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MANV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HOTEN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrinhDoHocVan.TENTRINHDO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GIOITINH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NGAYBATDAU)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.MANV })" class="btn btn-info">Chi tiết</a>
+                <a href="@Url.Action( "Index", "ChuyenPhongBan", new { id = item.MANV })" class="btn btn-primary">Quá trình công tác</a>
+                <a href='@Url.Action("Edit", new { id = item.MANV })' class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
+                <a href='@Url.Action("Delete", new { id = item.MANV })' class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Xóa</a>
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page
+    }))
+</div>

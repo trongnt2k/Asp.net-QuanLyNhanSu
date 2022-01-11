@@ -1,0 +1,46 @@
+﻿@model QLNhanSu.Models.PhongBan
+
+@{
+    ViewBag.Title = "Xóa phòng ban";
+}
+
+<h2>Xóa phòng ban</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TENPB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TENPB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIACHI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIACHI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SODIENTHOAI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SODIENTHOAI)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+            <a href='@Url.Action("Index")' class="btn btn-primary">Quay lại</a>
+        </div>
+    }
+</div>

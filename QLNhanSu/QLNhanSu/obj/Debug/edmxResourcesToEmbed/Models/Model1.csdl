@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLNSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ChucVu">
+    <Key>
+      <PropertyRef Name="MACV" />
+    </Key>
+    <Property Name="MACV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TENCV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="NhanViens" Relationship="Self.FK_NhanVien_ChucVu" FromRole="ChucVu" ToRole="NhanVien" />
+  </EntityType>
+  <EntityType Name="NhanVien">
+    <Key>
+      <PropertyRef Name="MANV" />
+    </Key>
+    <Property Name="MANV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HOTEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ANHDAIDIEN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DANTOC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GIOITINH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SODIENTHOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="QUEQUAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NGAYSINH" Type="DateTime" Precision="0" />
+    <Property Name="MACV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MATDHV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MAPB" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ChucVu" Relationship="Self.FK_NhanVien_ChucVu" FromRole="NhanVien" ToRole="ChucVu" />
+    <NavigationProperty Name="PhongBan" Relationship="Self.FK_NhanVien_PhongBan" FromRole="NhanVien" ToRole="PhongBan" />
+    <NavigationProperty Name="TrinhDoHocVan" Relationship="Self.FK_NhanVien_TrinhDoHocVan" FromRole="NhanVien" ToRole="TrinhDoHocVan" />
+    <Property Name="NGAYBATDAU" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="ChuyenPhongBans" Relationship="QLNSModel.FK_ChuyenPhongBan_NhanVien" FromRole="NhanVien" ToRole="ChuyenPhongBan" />
+    <Property Name="CHUYENNGANH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ChuyenCans" Relationship="QLNSModel.FK_ChuyenCan_NhanVien" FromRole="NhanVien" ToRole="ChuyenCan" />
+    <NavigationProperty Name="Luong" Relationship="QLNSModel.FK_Luong_NhanVien1" FromRole="NhanVien" ToRole="Luong" />
+    <NavigationProperty Name="QuanLyLuongs" Relationship="QLNSModel.FK_QuanLyLuong_NhanVien" FromRole="NhanVien" ToRole="QuanLyLuong" />
+  </EntityType>
+  <EntityType Name="PhongBan">
+    <Key>
+      <PropertyRef Name="MAPB" />
+    </Key>
+    <Property Name="MAPB" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TENPB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DIACHI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SODIENTHOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="NhanViens" Relationship="Self.FK_NhanVien_PhongBan" FromRole="PhongBan" ToRole="NhanVien" />
+    <NavigationProperty Name="ChuyenPhongBans" Relationship="QLNSModel.FK_ChuyenPhongBan_PhongBan" FromRole="PhongBan" ToRole="ChuyenPhongBan" />
+    <NavigationProperty Name="ChuyenPhongBans1" Relationship="QLNSModel.FK_ChuyenPhongBan_PhongBan1" FromRole="PhongBan" ToRole="ChuyenPhongBan" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TrinhDoHocVan">
+    <Key>
+      <PropertyRef Name="MATDHV" />
+    </Key>
+    <Property Name="MATDHV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TENTRINHDO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="NhanViens" Relationship="Self.FK_NhanVien_TrinhDoHocVan" FromRole="TrinhDoHocVan" ToRole="NhanVien" />
+  </EntityType>
+  <Association Name="FK_NhanVien_ChucVu">
+    <End Role="ChucVu" Type="Self.ChucVu" Multiplicity="1" />
+    <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChucVu">
+        <PropertyRef Name="MACV" />
+      </Principal>
+      <Dependent Role="NhanVien">
+        <PropertyRef Name="MACV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NhanVien_PhongBan">
+    <End Role="PhongBan" Type="Self.PhongBan" Multiplicity="1" />
+    <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhongBan">
+        <PropertyRef Name="MAPB" />
+      </Principal>
+      <Dependent Role="NhanVien">
+        <PropertyRef Name="MAPB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NhanVien_TrinhDoHocVan">
+    <End Role="TrinhDoHocVan" Type="Self.TrinhDoHocVan" Multiplicity="1" />
+    <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrinhDoHocVan">
+        <PropertyRef Name="MATDHV" />
+      </Principal>
+      <Dependent Role="NhanVien">
+        <PropertyRef Name="MATDHV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLNSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ChucVus" EntityType="Self.ChucVu" />
+    <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+    <EntitySet Name="PhongBans" EntityType="Self.PhongBan" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TrinhDoHocVans" EntityType="Self.TrinhDoHocVan" />
+    <AssociationSet Name="FK_NhanVien_ChucVu" Association="Self.FK_NhanVien_ChucVu">
+      <End Role="ChucVu" EntitySet="ChucVus" />
+      <End Role="NhanVien" EntitySet="NhanViens" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NhanVien_PhongBan" Association="Self.FK_NhanVien_PhongBan">
+      <End Role="PhongBan" EntitySet="PhongBans" />
+      <End Role="NhanVien" EntitySet="NhanViens" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NhanVien_TrinhDoHocVan" Association="Self.FK_NhanVien_TrinhDoHocVan">
+      <End Role="TrinhDoHocVan" EntitySet="TrinhDoHocVans" />
+      <End Role="NhanVien" EntitySet="NhanViens" />
+    </AssociationSet>
+    <EntitySet Name="ChuyenPhongBans" EntityType="QLNSModel.ChuyenPhongBan" />
+    <AssociationSet Name="FK_ChuyenPhongBan_NhanVien" Association="QLNSModel.FK_ChuyenPhongBan_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanViens" />
+      <End Role="ChuyenPhongBan" EntitySet="ChuyenPhongBans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChuyenPhongBan_PhongBan" Association="QLNSModel.FK_ChuyenPhongBan_PhongBan">
+      <End Role="PhongBan" EntitySet="PhongBans" />
+      <End Role="ChuyenPhongBan" EntitySet="ChuyenPhongBans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChuyenPhongBan_PhongBan1" Association="QLNSModel.FK_ChuyenPhongBan_PhongBan1">
+      <End Role="PhongBan" EntitySet="PhongBans" />
+      <End Role="ChuyenPhongBan" EntitySet="ChuyenPhongBans" />
+    </AssociationSet>
+    <EntitySet Name="ChuyenCans" EntityType="QLNSModel.ChuyenCan" />
+    <AssociationSet Name="FK_ChuyenCan_NhanVien" Association="QLNSModel.FK_ChuyenCan_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanViens" />
+      <End Role="ChuyenCan" EntitySet="ChuyenCans" />
+    </AssociationSet>
+    <EntitySet Name="Luongs" EntityType="QLNSModel.Luong" />
+    <AssociationSet Name="FK_Luong_NhanVien1" Association="QLNSModel.FK_Luong_NhanVien1">
+      <End Role="NhanVien" EntitySet="NhanViens" />
+      <End Role="Luong" EntitySet="Luongs" />
+    </AssociationSet>
+    <EntitySet Name="QuanLyLuongs" EntityType="QLNSModel.QuanLyLuong" />
+    <AssociationSet Name="FK_QuanLyLuong_NhanVien" Association="QLNSModel.FK_QuanLyLuong_NhanVien">
+      <End Role="NhanVien" EntitySet="NhanViens" />
+      <End Role="QuanLyLuong" EntitySet="QuanLyLuongs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ChuyenPhongBan">
+    <Key>
+      <PropertyRef Name="MACPB" />
+    </Key>
+    <Property Name="MACPB" Type="Int32" Nullable="false" />
+    <Property Name="MANV" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="MAPB" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="MAPBCHUYENDEN" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="LYDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="NhanVien" Relationship="QLNSModel.FK_ChuyenPhongBan_NhanVien" FromRole="ChuyenPhongBan" ToRole="NhanVien" />
+    <NavigationProperty Name="PhongBan" Relationship="QLNSModel.FK_ChuyenPhongBan_PhongBan" FromRole="ChuyenPhongBan" ToRole="PhongBan" />
+    <NavigationProperty Name="PhongBan1" Relationship="QLNSModel.FK_ChuyenPhongBan_PhongBan1" FromRole="ChuyenPhongBan" ToRole="PhongBan" />
+    <Property Name="NGAYCHUYEN" Type="DateTime" Precision="0" />
+  </EntityType>
+  <Association Name="FK_ChuyenPhongBan_NhanVien">
+    <End Type="QLNSModel.NhanVien" Role="NhanVien" Multiplicity="1" />
+    <End Type="QLNSModel.ChuyenPhongBan" Role="ChuyenPhongBan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="MANV" />
+      </Principal>
+      <Dependent Role="ChuyenPhongBan">
+        <PropertyRef Name="MANV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChuyenPhongBan_PhongBan">
+    <End Type="QLNSModel.PhongBan" Role="PhongBan" Multiplicity="1" />
+    <End Type="QLNSModel.ChuyenPhongBan" Role="ChuyenPhongBan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhongBan">
+        <PropertyRef Name="MAPB" />
+      </Principal>
+      <Dependent Role="ChuyenPhongBan">
+        <PropertyRef Name="MAPB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChuyenPhongBan_PhongBan1">
+    <End Type="QLNSModel.PhongBan" Role="PhongBan" Multiplicity="1" />
+    <End Type="QLNSModel.ChuyenPhongBan" Role="ChuyenPhongBan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhongBan">
+        <PropertyRef Name="MAPB" />
+      </Principal>
+      <Dependent Role="ChuyenPhongBan">
+        <PropertyRef Name="MAPBCHUYENDEN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ChuyenCan">
+    <Key>
+      <PropertyRef Name="MACC" />
+    </Key>
+    <Property Name="MACC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MANV" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="LYDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NGAYVANG" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="NhanVien" Relationship="QLNSModel.FK_ChuyenCan_NhanVien" FromRole="ChuyenCan" ToRole="NhanVien" />
+  </EntityType>
+  <Association Name="FK_ChuyenCan_NhanVien">
+    <End Type="QLNSModel.NhanVien" Role="NhanVien" Multiplicity="1" />
+    <End Type="QLNSModel.ChuyenCan" Role="ChuyenCan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="MANV" />
+      </Principal>
+      <Dependent Role="ChuyenCan">
+        <PropertyRef Name="MANV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Luong">
+    <Key>
+      <PropertyRef Name="MANV" />
+    </Key>
+    <Property Name="MANV" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="LUONGCOBAN" Type="Single" />
+    <Property Name="HESOLUONG" Type="Single" />
+    <Property Name="PHUCAP" Type="Single" />
+    <NavigationProperty Name="NhanVien" Relationship="QLNSModel.FK_Luong_NhanVien1" FromRole="Luong" ToRole="NhanVien" />
+  </EntityType>
+  <Association Name="FK_Luong_NhanVien1">
+    <End Type="QLNSModel.NhanVien" Role="NhanVien" Multiplicity="1" />
+    <End Type="QLNSModel.Luong" Role="Luong" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="MANV" />
+      </Principal>
+      <Dependent Role="Luong">
+        <PropertyRef Name="MANV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="QuanLyLuong">
+    <Key>
+      <PropertyRef Name="MAQLL" />
+    </Key>
+    <Property Name="MAQLL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MANV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="NGAYTINHLUONG" Type="DateTime" Precision="0" />
+    <Property Name="THUCLANH" Type="Single" />
+    <Property Name="LUONGCOBAN" Type="Single" />
+    <NavigationProperty Name="NhanVien" Relationship="QLNSModel.FK_QuanLyLuong_NhanVien" FromRole="QuanLyLuong" ToRole="NhanVien" />
+  </EntityType>
+  <Association Name="FK_QuanLyLuong_NhanVien">
+    <End Type="QLNSModel.NhanVien" Role="NhanVien" Multiplicity="0..1" />
+    <End Type="QLNSModel.QuanLyLuong" Role="QuanLyLuong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="MANV" />
+      </Principal>
+      <Dependent Role="QuanLyLuong">
+        <PropertyRef Name="MANV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

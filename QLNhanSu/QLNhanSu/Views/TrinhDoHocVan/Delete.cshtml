@@ -1,0 +1,35 @@
+﻿@model QLNhanSu.Models.TrinhDoHocVan
+
+@{
+    ViewBag.Title = "Xóa TDHV";
+}
+
+<h3>Bạn có chắc xóa trình độ học vấn này không?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MATDHV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MATDHV)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TENTRINHDO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TENTRINHDO)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay Lại", "Index")
+        </div>
+    }
+</div>

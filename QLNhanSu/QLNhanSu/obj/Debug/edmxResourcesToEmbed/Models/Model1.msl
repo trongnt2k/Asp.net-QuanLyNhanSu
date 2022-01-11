@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QLNSModelStoreContainer" CdmEntityContainer="QLNSEntities">
+    <EntitySetMapping Name="ChucVus">
+      <EntityTypeMapping TypeName="QLNSModel.ChucVu">
+        <MappingFragment StoreEntitySet="ChucVu">
+          <ScalarProperty Name="MACV" ColumnName="MACV" />
+          <ScalarProperty Name="TENCV" ColumnName="TENCV" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhanViens">
+      <EntityTypeMapping TypeName="QLNSModel.NhanVien">
+        <MappingFragment StoreEntitySet="NhanVien">
+          <ScalarProperty Name="CHUYENNGANH" ColumnName="CHUYENNGANH" />
+          <ScalarProperty Name="NGAYBATDAU" ColumnName="NGAYBATDAU" />
+          <ScalarProperty Name="MANV" ColumnName="MANV" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="ANHDAIDIEN" ColumnName="ANHDAIDIEN" />
+          <ScalarProperty Name="DANTOC" ColumnName="DANTOC" />
+          <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+          <ScalarProperty Name="SODIENTHOAI" ColumnName="SODIENTHOAI" />
+          <ScalarProperty Name="QUEQUAN" ColumnName="QUEQUAN" />
+          <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+          <ScalarProperty Name="MACV" ColumnName="MACV" />
+          <ScalarProperty Name="MATDHV" ColumnName="MATDHV" />
+          <ScalarProperty Name="MAPB" ColumnName="MAPB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PhongBans">
+      <EntityTypeMapping TypeName="QLNSModel.PhongBan">
+        <MappingFragment StoreEntitySet="PhongBan">
+          <ScalarProperty Name="MAPB" ColumnName="MAPB" />
+          <ScalarProperty Name="TENPB" ColumnName="TENPB" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="SODIENTHOAI" ColumnName="SODIENTHOAI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="QLNSModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrinhDoHocVans">
+      <EntityTypeMapping TypeName="QLNSModel.TrinhDoHocVan">
+        <MappingFragment StoreEntitySet="TrinhDoHocVan">
+          <ScalarProperty Name="MATDHV" ColumnName="MATDHV" />
+          <ScalarProperty Name="TENTRINHDO" ColumnName="TENTRINHDO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChuyenPhongBans">
+      <EntityTypeMapping TypeName="QLNSModel.ChuyenPhongBan">
+        <MappingFragment StoreEntitySet="ChuyenPhongBan">
+          <ScalarProperty Name="NGAYCHUYEN" ColumnName="NGAYCHUYEN" />
+          <ScalarProperty Name="LYDO" ColumnName="LYDO" />
+          <ScalarProperty Name="MAPBCHUYENDEN" ColumnName="MAPBCHUYENDEN" />
+          <ScalarProperty Name="MAPB" ColumnName="MAPB" />
+          <ScalarProperty Name="MANV" ColumnName="MANV" />
+          <ScalarProperty Name="MACPB" ColumnName="MACPB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChuyenCans">
+      <EntityTypeMapping TypeName="QLNSModel.ChuyenCan">
+        <MappingFragment StoreEntitySet="ChuyenCan">
+          <ScalarProperty Name="NGAYVANG" ColumnName="NGAYVANG" />
+          <ScalarProperty Name="LYDO" ColumnName="LYDO" />
+          <ScalarProperty Name="MANV" ColumnName="MANV" />
+          <ScalarProperty Name="MACC" ColumnName="MACC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Luongs">
+      <EntityTypeMapping TypeName="QLNSModel.Luong">
+        <MappingFragment StoreEntitySet="Luong">
+          <ScalarProperty Name="PHUCAP" ColumnName="PHUCAP" />
+          <ScalarProperty Name="HESOLUONG" ColumnName="HESOLUONG" />
+          <ScalarProperty Name="LUONGCOBAN" ColumnName="LUONGCOBAN" />
+          <ScalarProperty Name="MANV" ColumnName="MANV" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuanLyLuongs">
+      <EntityTypeMapping TypeName="QLNSModel.QuanLyLuong">
+        <MappingFragment StoreEntitySet="QuanLyLuong">
+          <ScalarProperty Name="LUONGCOBAN" ColumnName="LUONGCOBAN" />
+          <ScalarProperty Name="THUCLANH" ColumnName="THUCLANH" />
+          <ScalarProperty Name="NGAYTINHLUONG" ColumnName="NGAYTINHLUONG" />
+          <ScalarProperty Name="MANV" ColumnName="MANV" />
+          <ScalarProperty Name="MAQLL" ColumnName="MAQLL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

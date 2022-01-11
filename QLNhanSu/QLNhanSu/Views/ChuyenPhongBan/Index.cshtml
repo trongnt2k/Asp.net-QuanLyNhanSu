@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<QLNhanSu.Models.ChuyenPhongBan>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Quá trình công tác";
+}
+<h2>Quá trình công tác</h2>
+<br />
+
+<table class="table table-bordered table-hover">
+    <tr class="bg-success">
+        <th>
+            Mã nhân viên
+        </th>
+        <th>
+            Phòng ban cũ 
+        </th>
+        <th>
+            Phòng ban chuyển đến
+        </th>
+        <th>
+            Lý do
+        </th>
+        <th>
+            Ngày chuyển
+        </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MANV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhongBan.TENPB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhongBan1.TENPB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LYDO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NGAYCHUYEN)
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page
+    }))
+</div>

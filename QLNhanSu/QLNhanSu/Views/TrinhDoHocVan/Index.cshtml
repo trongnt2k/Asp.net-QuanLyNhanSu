@@ -1,0 +1,40 @@
+﻿@model System.Collections.Generic.List<QLNhanSu.Models.TrinhDoHocVan>
+
+@{
+    ViewBag.Title = "Trình Độ Học Vấn";
+}
+
+<h2>Trình Độ Học Vấn</h2>
+<br />
+
+<a class="btn btn-primary" href='@Url.Action("Create")'>Thêm trình độ học vấn</a>
+<p></p>
+<table class="table table-bordered table-hover">
+    <tr class="bg-success">
+        <th>
+            Mã TDHV
+        </th>
+        <th>
+            Tên TDHV
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.MATDHV
+            </td>
+            <td>
+                @item.TENTRINHDO
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.MATDHV })" class="btn btn-info">Chi tiết</a>
+                <a href="@Url.Action("Edit", new { id = item.MATDHV })" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
+                <a href="@Url.Action("Delete", new { id = item.MATDHV })" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Xóa</a>
+            </td>
+        </tr>
+    }
+
+</table>

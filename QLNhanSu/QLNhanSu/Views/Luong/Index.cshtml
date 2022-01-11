@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<QLNhanSu.Models.Luong>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Lương nhân viên";
+}
+<h2>Lương nhân viên</h2>
+<br />
+
+<a class="btn btn-primary" href='@Url.Action("Index", "QuanLyLuong")'>Danh sách lương</a>
+<input type="button" class="btn btn-success" value="Tính lương toàn bộ nhân viên" onclick="if(confirm('Bạn muốn tính lương toàn bộ nhân viên ?')) { location.href = '@Url.Action("CreateAll", "QuanLyLuong")' }">
+<p></p>
+
+<table class="table table-bordered table-hover">
+    <tr class="bg-success">
+        <th>
+            Mã nhân viên
+        </th>
+        <th>
+            Họ tên
+        </th>
+        <th>
+            Lương cơ bản
+        </th>
+        <th>
+            Hệ số lương
+        </th>
+        <th>
+            Phụ cấp
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MANV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.HOTEN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LUONGCOBAN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HESOLUONG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PHUCAP)
+            </td>
+            <td>
+                <a href='@Url.Action("Edit", new { id = item.MANV })' class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
+                <a href='@Url.Action("Create", "QuanLyLuong", new { id = item.MANV })' class="btn btn-success">Tính lương</a>
+                <a href='@Url.Action("Index", "QuanLyLuong", new { id = item.MANV })' class="btn btn-primary">Quá trình lương</a>
+                <a href='@Url.Action("Create", "ChuyenCan", new { id = item.MANV })' class="btn btn-danger">Điểm danh vắng</a>
+                <a href='@Url.Action("Index", "ChuyenCan", new { id = item.MANV })' class="btn btn-info">Chuyên cần</a>
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page
+    }))
+</div>

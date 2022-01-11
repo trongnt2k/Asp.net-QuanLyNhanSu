@@ -1,0 +1,39 @@
+﻿@model IEnumerable<QLNhanSu.Models.ChucVu>
+
+@{
+    ViewBag.Title = "Chức Vụ";
+}
+
+<h2>Chức Vụ</h2>
+
+<a class="btn btn-primary" href='@Url.Action("Create")'>Thêm chức vụ</a>
+<p></p>
+<table class="table table-bordered table-hover">
+    <tr class="bg-success">
+        <th>
+            Mã chức vụ
+        </th>
+        <th>
+            Tên chức vụ
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.MACV
+            </td>
+            <td>
+                @item.TENCV
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.MACV })" class="btn btn-info">Chi tiết</a>
+                <a href="@Url.Action("Edit", new { id = item.MACV })" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
+                <a href="@Url.Action("Delete", new { id = item.MACV })" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Xóa</a>
+            </td>
+        </tr>
+    }
+
+</table>

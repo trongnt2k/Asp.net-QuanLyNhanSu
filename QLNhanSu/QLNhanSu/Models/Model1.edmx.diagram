@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="76193b20c65d4732b425439671b40cb1" Name="Diagram1">
+        <EntityTypeShape EntityType="QLNSModel.ChucVu" Width="1.5" PointX="0.625" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.NhanVien" Width="1.5" PointX="3.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.PhongBan" Width="1.5" PointX="1.375" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.sysdiagram" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLNSModel.TrinhDoHocVan" Width="1.5" PointX="3.125" PointY="7.875" IsExpanded="true" />
+        <AssociationConnector Association="QLNSModel.FK_NhanVien_ChucVu" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_NhanVien_PhongBan" ManuallyRouted="false" />
+        <AssociationConnector Association="QLNSModel.FK_NhanVien_TrinhDoHocVan" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QLNSModel.ChuyenPhongBan" Width="1.5" PointX="5.625" PointY="2.5" />
+        <AssociationConnector Association="QLNSModel.FK_ChuyenPhongBan_NhanVien" />
+        <AssociationConnector Association="QLNSModel.FK_ChuyenPhongBan_PhongBan" />
+        <AssociationConnector Association="QLNSModel.FK_ChuyenPhongBan_PhongBan1" />
+        <EntityTypeShape EntityType="QLNSModel.ChuyenCan" Width="1.5" PointX="5.625" PointY="1.375" />
+        <AssociationConnector Association="QLNSModel.FK_ChuyenCan_NhanVien" />
+        <EntityTypeShape EntityType="QLNSModel.Luong" Width="1.5" PointX="5.625" PointY="9.375" />
+        <AssociationConnector Association="QLNSModel.FK_Luong_NhanVien1" />
+        <EntityTypeShape EntityType="QLNSModel.QuanLyLuong" Width="1.5" PointX="5.625" PointY="12.875" />
+        <AssociationConnector Association="QLNSModel.FK_QuanLyLuong_NhanVien" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

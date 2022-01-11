@@ -1,0 +1,128 @@
+﻿@model QLNhanSu.Models.NhanVien
+@using QLNhanSu.Models
+
+@{
+    ViewBag.Title = "Sửa nhân viên";
+}
+
+<h2>Cập nhật thông tin nhân viên</h2>
+
+
+@using (Html.BeginForm("Edit", "NhanVien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MANV)
+        @Html.Hidden("NGAYBATDAU")
+        @Html.HiddenFor(model => model.MAPB)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HOTEN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HOTEN, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HOTEN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ANHDAIDIEN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (Model.ANHDAIDIEN != null)
+                {
+                    @Html.Image("../../" + Model.ANHDAIDIEN, "", "80", "100")
+                }
+                else
+                {
+                    @Html.Image("../../Images/default.png", "", "80", "100")
+                }
+                @Html.TextBox("Image", "", new { type = "file" })
+                @Html.Hidden("ANHDAIDIEN")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DANTOC, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DANTOC, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DANTOC, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GIOITINH, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.GIOITINH, "Nam")
+                <strong>Nam</strong>
+                @Html.RadioButtonFor(model => model.GIOITINH, "Nữ")
+                <strong>Nữ</strong>
+                @Html.RadioButtonFor(model => model.GIOITINH, "Khác")
+                <strong>Khác</strong>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SODIENTHOAI, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SODIENTHOAI, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SODIENTHOAI, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QUEQUAN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QUEQUAN, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.QUEQUAN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NGAYSINH, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.NGAYSINH, new { @type = "date", @Value = Model.NGAYSINH?.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.NGAYSINH, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MACV, "Chức vụ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("MACV", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MACV, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MATDHV, "Trình độ học vấn", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("MATDHV", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MATDHV, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CHUYENNGANH, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CHUYENNGANH, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CHUYENNGANH, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href='@Url.Action("Index")' class="btn btn-primary">Quay lại</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

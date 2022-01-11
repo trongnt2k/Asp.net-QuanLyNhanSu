@@ -1,0 +1,42 @@
+﻿@model QLNhanSu.Models.ChuyenCan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChuyenCan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LYDO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LYDO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NGAYVANG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NGAYVANG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NhanVien.HOTEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.HOTEN)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MACC }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

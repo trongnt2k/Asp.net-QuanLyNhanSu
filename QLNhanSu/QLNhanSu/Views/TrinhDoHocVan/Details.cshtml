@@ -1,0 +1,24 @@
+﻿@model QLNhanSu.Models.TrinhDoHocVan
+
+@{
+    ViewBag.Title = "Chi tiết TDHV";
+}
+
+<h2>Chi tiết trình độ học vấn</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TENTRINHDO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TENTRINHDO)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.MATDHV }) |
+    @Html.ActionLink("Quay Lại", "Index")
+</p>

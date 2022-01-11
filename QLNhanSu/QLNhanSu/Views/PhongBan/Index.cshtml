@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<QLNhanSu.Models.PhongBan>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Phòng ban";
+}
+
+<h2>Phòng ban</h2>
+<br />
+<a class="btn btn-primary" href='@Url.Action("Create")'>Thêm phòng ban</a>
+<p></p>
+<table class="table table-bordered table-hover">
+    <tr class="bg-success">
+        <th>
+            Mã phòng ban
+        </th>
+        <th>
+            Tên phòng ban
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.MAPB)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TENPB)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DIACHI)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SODIENTHOAI)
+    </td>
+    <td>
+        <a href="@Url.Action("Details", new { id=item.MAPB })" class="btn btn-primary">Danh sách nhân viên</a>
+        <a href='@Url.Action("Edit", new { id = item.MAPB })' class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
+        <a href='@Url.Action("Delete", new { id = item.MAPB })' class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Xóa</a>
+    </td>
+</tr>
+    }
+</table>
+<div>
+    Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        page
+    }))
+</div>

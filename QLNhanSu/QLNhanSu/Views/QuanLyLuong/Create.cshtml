@@ -1,0 +1,102 @@
+﻿@model QLNhanSu.Models.QuanLyLuong
+
+@{
+    ViewBag.Title = "Tính Lương";
+}
+
+<h2>Tính Lương</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Mã nhân viên", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="form-control" style="width:280px">
+                <input type="text" value="@ViewBag.nhanVien.MANV" style="outline:none;border:none" readonly name="MANV"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Họ tên", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="form-control" style="width:280px">
+                <input type="text" value="@ViewBag.nhanVien.HOTEN" style="outline:none;border:none" readonly />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Số ngày công", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="form-control" style="width:280px">
+                <input type="text" value="@ViewBag.NgayCong" style="outline:none;border:none" readonly />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Lương cơ bản", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="form-control" style="width:280px">
+                <input type="text" value="@ViewBag.luong.LUONGCOBAN" style="outline:none;border:none" readonly />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Hệ số lương", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="form-control" style="width:280px">
+                <input type="text" value="@ViewBag.luong.HESOLUONG" style="outline:none;border:none" readonly />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Phụ cấp", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="form-control" style="width:280px">
+                <input type="text" value="@ViewBag.luong.PHUCAP" style="outline:none;border:none" readonly />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Thực lãnh", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="form-control" style="width:280px">
+                <input type="text" value="@ViewBag.THUCLANH" style="outline:none;border:none" readonly name="THUCLANH" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NGAYTINHLUONG, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.NGAYTINHLUONG, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Tính Lương" class="btn btn-success" />
+            <a href='@Url.Action("Edit", "Luong" , new { id = @ViewBag.nhanVien.MANV })' class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa bảng lương</a>
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    <a href='@Url.Action("Index", "Luong")' class="btn btn-primary">Quay lại</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
