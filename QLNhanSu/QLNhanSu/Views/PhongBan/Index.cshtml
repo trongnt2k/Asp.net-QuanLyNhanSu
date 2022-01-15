@@ -7,8 +7,22 @@
 
 <h2>Phòng ban</h2>
 <br />
-<a class="btn btn-primary" href='@Url.Action("Create")'>Thêm phòng ban</a>
+
+<div style="display:flex; justify-content:space-between">
+    <div>
+        <a class="btn btn-primary" href='@Url.Action("Create")'>Thêm phòng ban</a>
+    </div>
+    <div>
+        @using (Html.BeginForm("Index", "PhongBan", FormMethod.Get))
+        {
+            <input type="text" name="searchString" />
+            <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+        }
+    </div>
+
+</div>
 <p></p>
+
 <table class="table table-bordered table-hover">
     <tr class="bg-success">
         <th>
@@ -29,25 +43,25 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.MAPB)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TENPB)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DIACHI)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.SODIENTHOAI)
-    </td>
-    <td>
-        <a href="@Url.Action("Details", new { id=item.MAPB })" class="btn btn-primary">Danh sách nhân viên</a>
-        <a href='@Url.Action("Edit", new { id = item.MAPB })' class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
-        <a href='@Url.Action("Delete", new { id = item.MAPB })' class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Xóa</a>
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MAPB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TENPB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIACHI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SODIENTHOAI)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id=item.MAPB })" class="btn btn-primary">Danh sách nhân viên</a>
+                <a href='@Url.Action("Edit", new { id = item.MAPB })' class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
+                <a href='@Url.Action("Delete", new { id = item.MAPB })' class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Xóa</a>
+            </td>
+        </tr>
     }
 </table>
 <div>

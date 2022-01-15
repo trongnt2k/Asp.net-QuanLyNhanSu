@@ -16,9 +16,11 @@ namespace QLNhanSu.Controllers
         private QLNSEntities db = new QLNSEntities();
 
         // GET: Luong
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string searchString)
         {
             var luongs = db.Luongs.Include(l => l.NhanVien).OrderBy(l => l.MANV);
+            if(String.IsNullOrEmpty(searchString) == false)
+                luongs = db.Luongs.Include(l => l.NhanVien).Where(l => l.NhanVien.HOTEN.Contains(searchString) || l.NhanVien.MANV.Contains(searchString)).OrderBy(l => l.MANV);
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(luongs.ToPagedList(pageNumber, pageSize));

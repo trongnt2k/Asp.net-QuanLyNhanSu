@@ -6,8 +6,20 @@
 <h2>Lương nhân viên</h2>
 <br />
 
-<a class="btn btn-primary" href='@Url.Action("Index", "QuanLyLuong")'>Danh sách lương</a>
-<input type="button" class="btn btn-success" value="Tính lương toàn bộ nhân viên" onclick="if(confirm('Bạn muốn tính lương toàn bộ nhân viên ?')) { location.href = '@Url.Action("CreateAll", "QuanLyLuong")' }">
+<div style="display:flex; justify-content:space-between">
+    <div style="display:flex">
+        <a class="btn btn-primary" style="margin-right:5px" href='@Url.Action("Index", "QuanLyLuong")'>Danh sách lương</a>
+        <input type="button" class="btn btn-success" value="Tính lương toàn bộ nhân viên" onclick="if(confirm('Bạn muốn tính lương toàn bộ nhân viên ?')) { location.href = '@Url.Action("CreateAll", "QuanLyLuong")' }">
+    </div>
+    <div>
+        @using (Html.BeginForm("Index", "Luong", FormMethod.Get))
+        {
+            <input type="text" name="searchString" />
+            <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+        }
+    </div>
+
+</div>
 <p></p>
 
 <table class="table table-bordered table-hover">
