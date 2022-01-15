@@ -5,6 +5,29 @@
 }
 <h2>Quá trình lương</h2>
 <br />
+<div style="display:flex; justify-content:space-between">
+    <div>
+        @using (Html.BeginForm("Export", "QuanLyLuong", FormMethod.Post))
+        {
+            <input type="submit" value="Xuất danh sách" class="btn btn-primary" />
+            <input name="fromdate" type="hidden" value="@ViewBag.fromdate" />
+            <input name="todate" type="hidden" value="@ViewBag.todate" />
+            <input name="searchString" type="hidden" value="@ViewBag.searchString" />
+            <input name="id" type="hidden" value="@ViewBag.id" />
+        }
+    </div>
+    <div>
+        @using (Html.BeginForm("Index", "QuanLyLuong", FormMethod.Get))
+        {
+            <span>Từ ngày </span><input id="fromdate" name="fromdate" type="date" />
+            <span>Đến ngày </span><input id="todate" name="todate" type="date" />
+            <input type="text" name="searchString" />
+            <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+        }
+    </div>
+
+</div>
+<p></p>
 
 <table class="table table-bordered table-hover">
     <tr class="bg-success">
@@ -31,26 +54,26 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.NhanVien.MANV)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NhanVien.HOTEN)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NhanVien.ChucVu.TENCV)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.LUONGCOBAN)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.THUCLANH)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NGAYTINHLUONG)
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.MANV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.HOTEN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.ChucVu.TENCV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LUONGCOBAN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.THUCLANH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NGAYTINHLUONG)
+            </td>
+        </tr>
     }
 </table>
 <div>

@@ -8,10 +8,31 @@
 <h2>Danh sách nhân viên phòng ban @ViewBag.PBName</h2>
 <br />
 
-<a class="btn btn-primary" href="#">Xuất danh sách nhân viên</a>
+<div style="display:flex; justify-content:space-between">
+    <div>
+        @using (Html.BeginForm("Export", "PhongBan", FormMethod.Post))
+        {
+            <input type="submit" value="Xuất danh sách nhân viên" class="btn btn-primary" />
+            <input name="searchString" type="hidden" value="@ViewBag.searchString" />
+            <input name="id" type="hidden" value="@ViewBag.id" />
+        }
+    </div>
+    <div>
+        @using (Html.BeginForm("Details", "PhongBan", FormMethod.Get))
+        {
+            <input type="text" name="searchString" />
+            <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+        }
+    </div>
+
+</div>
 <p></p>
+
 <table class="table table-bordered table-hover">
     <tr class="bg-success">
+        <th>
+            Mã nhân viên
+        </th>
         <th>
             Họ tên
         </th>
@@ -36,30 +57,33 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.HOTEN)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.GIOITINH)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.SODIENTHOAI)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ChucVu.TENCV)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TrinhDoHocVan.TENTRINHDO)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CHUYENNGANH)
-    </td>
-    <td>
-        <a href="@Url.Action( "Index", "ChuyenPhongBan", new { id = item.MANV })" class="btn btn-primary">Quá trình công tác</a>
-        <a href="@Url.Action( "Create", "ChuyenPhongBan", new { id = item.MANV })" class="btn btn-info">Chuyển nhân viên</a>
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MANV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HOTEN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GIOITINH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SODIENTHOAI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChucVu.TENCV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrinhDoHocVan.TENTRINHDO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CHUYENNGANH)
+            </td>
+            <td>
+                <a href="@Url.Action( "Index", "ChuyenPhongBan", new { id = item.MANV })" class="btn btn-primary">Quá trình công tác</a>
+                <a href="@Url.Action( "Create", "ChuyenPhongBan", new { id = item.MANV })" class="btn btn-info">Chuyển nhân viên</a>
+            </td>
+        </tr>
     }
 </table>
 <div>

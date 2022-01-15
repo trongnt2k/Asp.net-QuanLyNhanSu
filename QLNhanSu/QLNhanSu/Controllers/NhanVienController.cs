@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using QLNhanSu.Models;
 using System.IO;
 using PagedList;
+using ClosedXML.Excel;
+using System.Globalization;
 
 namespace QLNhanSu.Controllers
 {
@@ -17,9 +19,35 @@ namespace QLNhanSu.Controllers
         private QLNSEntities db = new QLNSEntities();
 
         // GET: NhanVien
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string searchString, string fromdate, string todate)
         {
+            ViewBag.fromdate = fromdate;
+            ViewBag.todate = todate;
+            ViewBag.searchString = searchString;
             var nhanViens = db.NhanViens.Include(n => n.ChucVu).Include(n => n.PhongBan).Include(n => n.TrinhDoHocVan).OrderBy(n => n.MANV);
+            if(searchString != null)
+            {
+                if(fromdate != "" && todate != "")
+                {
+                    DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    nhanViens = db.NhanViens.Include(n => n.ChucVu).Include(n => n.PhongBan).Include(n => n.TrinhDoHocVan).Where(n => n.HOTEN.Contains(searchString) && (n.NGAYBATDAU >= fd && n.NGAYBATDAU <= td)).OrderBy(n => n.MANV);
+                }
+                if(fromdate != "" && todate == "")
+                {
+                    DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    nhanViens = db.NhanViens.Include(n => n.ChucVu).Include(n => n.PhongBan).Include(n => n.TrinhDoHocVan).Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU >= fd).OrderBy(n => n.MANV);
+                }
+                if (fromdate == "" && todate != "")
+                {
+                    DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    nhanViens = db.NhanViens.Include(n => n.ChucVu).Include(n => n.PhongBan).Include(n => n.TrinhDoHocVan).Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU >= td).OrderBy(n => n.MANV);
+                }
+                if (fromdate == "" && todate == "")
+                {
+                    nhanViens = db.NhanViens.Include(n => n.ChucVu).Include(n => n.PhongBan).Include(n => n.TrinhDoHocVan).Where(n => n.HOTEN.Contains(searchString)).OrderBy(n => n.MANV);
+                }
+            }
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(nhanViens.ToPagedList(pageNumber, pageSize));
@@ -167,6 +195,77 @@ namespace QLNhanSu.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        [HttpPost]
+        public FileResult Export(string searchString, string fromdate, string todate)
+        {
+            DataTable dt = new DataTable("Grid");
+            dt.Columns.AddRange(new DataColumn[12] {
+                new DataColumn("Mã nhân viên"),
+                new DataColumn("Họ tên"),
+                new DataColumn("Dân tộc"),
+                new DataColumn("Giới tính"),
+                new DataColumn("Số điện thoại"),
+                new DataColumn("Quê quán"),
+                new DataColumn("Ngày sinh"),
+                new DataColumn("Ngày bắt đầu"),
+                new DataColumn("Chuyên ngành"),
+                new DataColumn("Chức vụ"),
+                new DataColumn("Phòng ban"),
+                new DataColumn("Trình độ học vấn")
+                });
+            var nhanViens = db.NhanViens.OrderBy(n => n.MANV).ToList();
+            if (searchString != null)
+            {
+                if (fromdate != "" && todate != "")
+                {
+                    DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    nhanViens = db.NhanViens.Where(n => n.HOTEN.Contains(searchString) && (n.NGAYBATDAU >= fd && n.NGAYBATDAU <= td)).OrderBy(n => n.MANV).ToList();
+                }
+                if (fromdate != "" && todate == "")
+                {
+                    DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    nhanViens = db.NhanViens.Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU >= fd).OrderBy(n => n.MANV).ToList();
+                }
+                if (fromdate == "" && todate != "")
+                {
+                    DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    nhanViens = db.NhanViens.Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU >= td).OrderBy(n => n.MANV).ToList();
+                }
+            }
+
+            foreach (var nv in nhanViens)
+            {
+                var chucvu = "";
+                var phongban = "";
+                var trinhdohocvan = "";
+                if (nv.PhongBan != null)
+                {
+                    PhongBan pb = db.PhongBans.Find(nv.MAPB);
+                    phongban = pb.TENPB;
+                }
+                if (nv.ChucVu != null)
+                {
+                    ChucVu cv = db.ChucVus.Find(nv.MACV);
+                    chucvu = cv.TENCV;
+                }
+                if (nv.TrinhDoHocVan != null)
+                {
+                    TrinhDoHocVan tdhv = db.TrinhDoHocVans.Find(nv.MATDHV);
+                    trinhdohocvan = tdhv.TENTRINHDO;
+                }
+                dt.Rows.Add(nv.MANV, nv.HOTEN, nv.DANTOC, nv.GIOITINH, nv.SODIENTHOAI, nv.QUEQUAN, nv.NGAYSINH?.ToString("dd/MM/yyyy"), nv.NGAYBATDAU?.ToString("dd/MM/yyyy"), nv.CHUYENNGANH, chucvu, phongban, trinhdohocvan);
+            }
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "NhanVien.xlsx");
+                }
+            }
         }
     }
 }

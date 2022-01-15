@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using QLNhanSu.Models;
 using PagedList;
+using ClosedXML.Excel;
+using System.Globalization;
+using System.IO;
 
 namespace QLNhanSu.Controllers
 {
@@ -16,17 +19,67 @@ namespace QLNhanSu.Controllers
         private QLNSEntities db = new QLNSEntities();
 
         // GET: QuanLyLuong
-        public ActionResult Index(string id, int? page)
+        public ActionResult Index(string id, int? page, string searchString, string fromdate, string todate)
         {
+            ViewBag.fromdate = fromdate;
+            ViewBag.todate = todate;
+            ViewBag.searchString = searchString;
+            ViewBag.id = id;
             var quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).OrderBy(q => q.MANV);
             if (id != null)
             {
-                quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id).OrderBy(q => q.MANV);
+                if (searchString != null)
+                {
+                    if (fromdate != "" && todate != "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && (q.NhanVien.HOTEN.Contains(searchString)) && (q.NGAYTINHLUONG >= fd && q.NGAYTINHLUONG <= td)).OrderBy(q => q.MAQLL);
+                    }
+                    if (fromdate != "" && todate == "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && (q.NhanVien.HOTEN.Contains(searchString)) && q.NGAYTINHLUONG >= fd).OrderBy(q => q.MAQLL);
+                    }
+                    if (fromdate == "" && todate != "")
+                    {
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && (q.NhanVien.HOTEN.Contains(searchString)) && q.NGAYTINHLUONG >= td).OrderBy(q => q.MAQLL);
+                    }
+                    if (fromdate == "" && todate == "")
+                    {
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && q.NhanVien.HOTEN.Contains(searchString)).OrderBy(q => q.MAQLL);
+                    }
+                }
+                else
+                    quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id).OrderBy(q => q.MAQLL);
             }
-            else
+            if (id == null)
             {
-                quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).OrderBy(q => q.MANV);
-            }    
+                if (searchString != null)
+                {
+                    if (fromdate != "" && todate != "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString) && (q.NGAYTINHLUONG >= fd && q.NGAYTINHLUONG <= td)).OrderBy(q => q.MAQLL);
+                    }
+                    if (fromdate != "" && todate == "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString) && q.NGAYTINHLUONG >= fd).OrderBy(q => q.MAQLL);
+                    }
+                    if (fromdate == "" && todate != "")
+                    {
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString) && q.NGAYTINHLUONG >= td).OrderBy(q => q.MAQLL);
+                    }
+                    if (fromdate == "" && todate == "")
+                    {
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString)).OrderBy(q => q.MAQLL);
+                    }
+                }
+            }
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(quanLyLuongs.ToPagedList(pageNumber, pageSize));
@@ -172,6 +225,89 @@ namespace QLNhanSu.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public FileResult Export(string searchString, string fromdate, string todate, string id)
+        {
+            DataTable dt = new DataTable("Grid");
+            dt.Columns.AddRange(new DataColumn[6] {
+                new DataColumn("Mã tính lương"),
+                new DataColumn("Mã nhân viên"),
+                new DataColumn("Họ tên"),
+                new DataColumn("Lương cơ bản"),
+                new DataColumn("Thực lãnh"),
+                new DataColumn("Ngày tính lương"),
+                });
+            var quanLyLuongs = db.QuanLyLuongs.OrderBy(n => n.MAQLL).ToList();
+            if (String.IsNullOrEmpty(id) == false)
+            {
+                if (String.IsNullOrEmpty(searchString) == false || searchString == "")
+                {
+                    if (fromdate != "" && todate != "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && (q.NhanVien.HOTEN.Contains(searchString)) && (q.NGAYTINHLUONG >= fd && q.NGAYTINHLUONG <= td)).OrderBy(q => q.MAQLL).ToList();
+                    }
+                    if (fromdate != "" && todate == "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && (q.NhanVien.HOTEN.Contains(searchString)) && q.NGAYTINHLUONG >= fd).OrderBy(q => q.MAQLL).ToList();
+                    }
+                    if (fromdate == "" && todate != "")
+                    {
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && (q.NhanVien.HOTEN.Contains(searchString)) && q.NGAYTINHLUONG >= td).OrderBy(q => q.MAQLL).ToList();
+                    }
+                    if (fromdate == "" && todate == "")
+                    {
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id && q.NhanVien.HOTEN.Contains(searchString)).OrderBy(q => q.MAQLL).ToList();
+                    }
+                }
+                else
+                    quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.MANV == id).OrderBy(q => q.MAQLL).ToList();
+            }
+            if (String.IsNullOrEmpty(id) == true)
+            {
+                if (String.IsNullOrEmpty(searchString) == false || searchString == "")
+                {
+                    if (fromdate != "" && todate != "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString) && (q.NGAYTINHLUONG >= fd && q.NGAYTINHLUONG <= td)).OrderBy(q => q.MAQLL).ToList();
+                    }
+                    if (fromdate != "" && todate == "")
+                    {
+                        DateTime fd = DateTime.ParseExact(fromdate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString) && q.NGAYTINHLUONG >= fd).OrderBy(q => q.MAQLL).ToList();
+                    }
+                    if (fromdate == "" && todate != "")
+                    {
+                        DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString) && q.NGAYTINHLUONG >= td).OrderBy(q => q.MAQLL).ToList();
+                    }
+                    if (fromdate == "" && todate == "")
+                    {
+                        quanLyLuongs = db.QuanLyLuongs.Include(q => q.NhanVien).Where(q => q.NhanVien.HOTEN.Contains(searchString)).OrderBy(q => q.MAQLL).ToList();
+                    }
+                }
+            }
+
+            foreach (var qll in quanLyLuongs)
+            {
+                dt.Rows.Add(qll.MAQLL, qll.MANV, qll.NhanVien.HOTEN, qll.LUONGCOBAN, qll.THUCLANH, qll.NGAYTINHLUONG?.ToString("dd/MM/yyyy"));
+            }
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DanhSachLuong.xlsx");
+                }
+            }
         }
     }
 }

@@ -332,3 +332,11 @@ C:\Users\User\Documents\GitHub\QuanLyNhanSu-Asp.Net\QLNhanSu\QLNhanSu\obj\Debug\
 C:\Users\User\Documents\GitHub\QuanLyNhanSu-Asp.Net\QLNhanSu\QLNhanSu\obj\Debug\QLNhanSu.dll
 C:\Users\User\Documents\GitHub\QuanLyNhanSu-Asp.Net\QLNhanSu\QLNhanSu\obj\Debug\QLNhanSu.pdb
 C:\Users\User\Documents\GitHub\QuanLyNhanSu-Asp.Net\QLNhanSu\QLNhanSu\obj\Debug\QLNhanSu.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\ClosedXML.dll
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\DocumentFormat.OpenXml.dll
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\ExcelNumberFormat.dll
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\System.IO.Packaging.dll
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\ClosedXML.pdb
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\ClosedXML.xml
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\DocumentFormat.OpenXml.xml
+C:\Users\User\source\repos\QLNhanSu\QLNhanSu\bin\ExcelNumberFormat.xml
