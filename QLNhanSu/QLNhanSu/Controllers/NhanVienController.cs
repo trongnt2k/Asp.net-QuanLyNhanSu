@@ -14,6 +14,7 @@ using System.Globalization;
 
 namespace QLNhanSu.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class NhanVienController : Controller
     {
         private QLNSEntities db = new QLNSEntities();
@@ -41,7 +42,7 @@ namespace QLNhanSu.Controllers
                 if (fromdate == "" && todate != "")
                 {
                     DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    nhanViens = db.NhanViens.Include(n => n.ChucVu).Include(n => n.PhongBan).Include(n => n.TrinhDoHocVan).Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU >= td).OrderBy(n => n.MANV);
+                    nhanViens = db.NhanViens.Include(n => n.ChucVu).Include(n => n.PhongBan).Include(n => n.TrinhDoHocVan).Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU <= td).OrderBy(n => n.MANV);
                 }
                 if (fromdate == "" && todate == "")
                 {
@@ -231,7 +232,7 @@ namespace QLNhanSu.Controllers
                 if (fromdate == "" && todate != "")
                 {
                     DateTime td = DateTime.ParseExact(todate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    nhanViens = db.NhanViens.Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU >= td).OrderBy(n => n.MANV).ToList();
+                    nhanViens = db.NhanViens.Where(n => n.HOTEN.Contains(searchString) && n.NGAYBATDAU <= td).OrderBy(n => n.MANV).ToList();
                 }
             }
 

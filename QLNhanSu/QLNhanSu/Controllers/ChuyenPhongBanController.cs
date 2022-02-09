@@ -11,6 +11,7 @@ using PagedList;
 
 namespace QLNhanSu.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ChuyenPhongBanController : Controller
     {
         private QLNSEntities db = new QLNSEntities();

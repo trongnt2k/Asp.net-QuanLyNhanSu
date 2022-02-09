@@ -194,6 +194,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChucVuController.cs" />
     <Compile Include="Controllers\ChuyenCanController.cs" />
     <Compile Include="Controllers\ChuyenPhongBanController.cs" />
@@ -203,6 +204,8 @@
     <Compile Include="Controllers\NhanVienController.cs" />
     <Compile Include="Controllers\PhongBanController.cs" />
     <Compile Include="Controllers\QuanLyLuongController.cs" />
+    <Compile Include="Controllers\RoleAdminController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\TrinhDoHocVanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -247,9 +250,12 @@
     <Compile Include="Models\QuanLyLuong.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ThongKeLuong.cs" />
+    <Compile Include="Models\ThongKeNhanVien.cs" />
     <Compile Include="Models\TrinhDoHocVan.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -370,6 +376,16 @@
     <Content Include="Views\ChuyenCan\Details.cshtml" />
     <Content Include="Views\ChuyenCan\Edit.cshtml" />
     <Content Include="Views\ChuyenCan\Index.cshtml" />
+    <Content Include="Views\RoleAdmin\Index.cshtml" />
+    <Content Include="Views\RoleAdmin\Details.cshtml" />
+    <Content Include="Views\RoleAdmin\Create.cshtml" />
+    <Content Include="Views\RoleAdmin\Edit.cshtml" />
+    <Content Include="Views\RoleAdmin\Delete.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\ThongKe\Index.cshtml" />
+    <Content Include="Views\ThongKe\NhanVienYearStats.cshtml" />
+    <Content Include="Views\ThongKe\LuongMonthStats.cshtml" />
+    <Content Include="Views\ThongKe\LuongYearStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

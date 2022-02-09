@@ -1,0 +1,139 @@
+﻿@*<div class="container">
+        <div class="row">
+            @Html.ActionLink("Quản lý phân quyền", "Index", "RoleAdmin")
+        </div>
+        <div class="row">
+            @Html.ActionLink("Quản lý người dùng", "Index", "UserAdmin")
+        </div>
+    </div>*@
+<style>
+    .box {
+        border-radius: 5px;
+        overflow: hidden;
+        width: 30%;
+    }
+
+    .overall {
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        color: white;
+        position: relative;
+    }
+
+    .detail {
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        text-decoration: none !important;
+    }
+
+        .detail:hover {
+            color: red;
+        }
+
+    .user {
+        font-size: 95px;
+    }
+
+    .overall > div > span {
+        font-size: 65px;
+        position: absolute;
+        top: 5px;
+        right: 25px;
+    }
+
+    .overall > div > div {
+        position: absolute;
+        top: 95px;
+        right: 15px;
+    }
+
+    .main {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .org {
+        background-color: #f8ae4c;
+    }
+
+    .org-text {
+        color: #f8ae4c;
+    }
+
+    .org-border {
+        border: 2px solid orange;
+    }
+
+    .blue {
+        background-color: #3b88d0;
+    }
+
+    .blue-text {
+        color: #3b88d0;
+    }
+
+    .blue-border {
+        border: 2px solid #3b88d0;
+    }
+
+    .green {
+        background-color: #54a858;
+    }
+
+    .green-text {
+        color: #54a858;
+    }
+
+    .green-border {
+        border: 2px solid #54a858;
+    }
+</style>
+<h2>Tổng quan</h2>
+<br />
+<br />
+<div class="main">
+    <div class="box org-border">
+        <div class="overall org">
+            <span class="glyphicon glyphicon-user user"></span>
+            <div>
+                <span>@ViewBag.nhanViens</span>
+                <div>Tổng số nhân viên</div>
+            </div>
+        </div>
+        <a class="detail org-text" href="@Url.Action("Index", "NhanVien")">
+            <span>Xem chi tiết</span>
+            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="box blue-border">
+        <div class="overall blue">
+            <span class="glyphicon glyphicon-usd user"></span>
+            <div>
+                <span>@ViewBag.luongs</span>
+                <div>Tổng số bảng lương</div>
+            </div>
+        </div>
+        <a class="detail blue-text" href="@Url.Action("Index", "Luong")">
+            <span>Xem chi tiết</span>
+            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+    <div class="box green-border">
+        <div class="overall green">
+            <span class="user glyphicon glyphicon-tasks"></span>
+            <div>
+                <span>@ViewBag.phongBans</span>
+                <div>Tổng số phòng ban</div>
+            </div>
+        </div>
+        <a class="detail green-text" href="@Url.Action("Index", "PhongBan")">
+            <span>Xem chi tiết</span>
+            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </a>
+    </div>
+</div>
+
+

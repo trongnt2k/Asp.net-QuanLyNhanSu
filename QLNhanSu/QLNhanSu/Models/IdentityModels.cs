@@ -29,5 +29,7 @@ namespace QLNhanSu.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<QLNhanSu.Models.RoleViewModel> RoleViewModels { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using System.IO;
 
 namespace QLNhanSu.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PhongBanController : Controller
     {
         private QLNSEntities db = new QLNSEntities();
@@ -20,12 +21,13 @@ namespace QLNhanSu.Controllers
         // GET: PhongBan
         public ActionResult Index(int? page, string searchString)
         {
-            var phongBans = db.PhongBans.OrderBy(p => p.MAPB);
-            if (String.IsNullOrEmpty(searchString) == false)
-                phongBans = db.PhongBans.Where(p => p.TENPB.Contains(searchString) || p.MAPB.Contains(searchString)).OrderBy(p => p.MAPB);
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            
+            var phongBans = db.PhongBans.OrderBy(p => p.MAPB);
+            if(searchString != null && searchString != "")
+            {
+                phongBans = db.PhongBans.Where(p => p.MAPB.Contains(searchString) || p.TENPB.Contains(searchString)).OrderBy(p => p.MAPB);
+            }
             return View(phongBans.ToPagedList(pageNumber, pageSize));
 
         }

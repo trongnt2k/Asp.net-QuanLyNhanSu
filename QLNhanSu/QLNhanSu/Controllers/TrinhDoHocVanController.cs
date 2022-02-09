@@ -10,6 +10,7 @@ using QLNhanSu.Models;
 
 namespace QLNhanSu.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TrinhDoHocVanController : Controller
     {
         private QLNSEntities db = new QLNSEntities();

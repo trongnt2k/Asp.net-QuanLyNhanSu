@@ -14,6 +14,7 @@ using System.IO;
 
 namespace QLNhanSu.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class QuanLyLuongController : Controller
     {
         private QLNSEntities db = new QLNSEntities();

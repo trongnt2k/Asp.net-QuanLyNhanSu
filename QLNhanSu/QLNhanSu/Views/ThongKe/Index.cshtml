@@ -1,0 +1,77 @@
+﻿<h2 class="text-center text-danger">THỐNG KÊ SỐ LƯỢNG NHÂN VIÊN THEO THÁNG</h2>
+<script>
+    let nhanVienLabels = [], nhanVienInfo = [];
+    @foreach (var item in (IEnumerable<QLNhanSu.Models.ThongKeNhanVien>)ViewBag.nhanVien)
+    {
+        <text>nhanVienLabels.push('@item.month/@item.year')</text>
+        <text>nhanVienInfo.push(@item.count)</text>
+    }
+    window.onload = () => {
+        nhanVienChart("nhanVien", nhanVienLabels, nhanVienInfo)
+    }
+    function randomColor() {
+        let r = parseInt(Math.random() * 255);
+        let g = parseInt(Math.random() * 255);
+        let b = parseInt(Math.random() * 255);
+
+        return `rgb(${r}, ${g}, ${b})`
+    }
+
+    function nhanVienChart(id, nhanVienLabels = [], nhanVienInfo = []) {
+        let colors = []
+        for (let i = 0; i < nhanVienInfo.length; i++)
+
+            colors.push(randomColor())
+        data = {
+            labels: nhanVienLabels,
+            datasets: [{
+                label: 'Thống kê số lượng nhân viên',
+                data: nhanVienInfo,
+                backgroundColor: colors,
+                hoverOffset: 4
+            }]
+        };
+        const config = {
+            type: 'line',
+            data: data,
+        };
+
+        let ctx = document.getElementById(id).getContext("2d")
+
+        new Chart(ctx, config)
+    }
+</script>
+<div style="width:100%" class="text-center">
+    @using (Html.BeginForm("Index", "ThongKe", FormMethod.Get))
+    {
+        <span>Từ tháng </span><input id="fromdate" name="fromdate" type="date" />
+        <span>Đến tháng </span><input id="todate" name="todate" type="date" />
+        <input type="submit" value="Lọc" class="btn btn-success" />
+    }
+</div>
+<div>
+    @using (Html.BeginForm("NhanVienMonthExport", "ThongKe", FormMethod.Post))
+    {
+        <input type="submit" value="Xuất file thống kê" class="btn btn-primary" />
+        <input name="fromdate" type="hidden" value="@ViewBag.fromdate" />
+        <input name="todate" type="hidden" value="@ViewBag.todate" />
+    }
+</div>
+<br />
+<div>
+    <canvas id="nhanVien"></canvas>
+</div>
+<br />
+<table class="table text-center">
+    <tr>
+        <th class="text-center">Tháng</th>
+        <th class="text-center">Số lượng nhân viên</th>
+    </tr>
+    @foreach (var item in (IEnumerable<QLNhanSu.Models.ThongKeNhanVien>)ViewBag.nhanVien)
+    {
+        <tr>
+            <td>@item.month/@item.year</td>
+            <td>@item.count</td>
+        </tr>
+    }
+</table>

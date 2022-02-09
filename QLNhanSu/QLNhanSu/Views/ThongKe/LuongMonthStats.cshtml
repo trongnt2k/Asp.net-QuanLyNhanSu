@@ -1,0 +1,78 @@
+﻿<script>
+    let luongMonthLabels = [], luongMonthInfo = [];
+    @foreach (var item in (IEnumerable<QLNhanSu.Models.ThongKeLuong>)ViewBag.luong)
+    {
+        <text>luongMonthLabels.push('@item.month/@item.year')</text>
+        <text>luongMonthInfo.push(@item.sum)</text>
+    }
+    window.onload = () => {
+        luongMonthChart("luongMonth", luongMonthLabels, luongMonthInfo)
+    }
+    function randomColor() {
+        let r = parseInt(Math.random() * 255);
+        let g = parseInt(Math.random() * 255);
+        let b = parseInt(Math.random() * 255);
+
+        return `rgb(${r}, ${g}, ${b})`
+    }
+
+    function luongMonthChart(id, luongMonthLabels = [], luongMonthInfo = []) {
+        let colors = []
+        for (let i = 0; i < luongMonthInfo.length; i++)
+
+            colors.push(randomColor())
+        data = {
+            labels: luongMonthLabels,
+            datasets: [{
+                label: 'Thống kê tiền lương',
+                data: luongMonthInfo,
+                backgroundColor: colors,
+                hoverOffset: 4
+            }]
+        };
+        const config = {
+            type: 'bar',
+            data: data,
+        };
+
+        let ctx = document.getElementById(id).getContext("2d")
+
+        new Chart(ctx, config)
+    }
+</script>
+<h2 class="text-center text-danger">THỐNG KÊ LƯƠNG THEO THÁNG</h2>
+<div style="width:100%" class="text-center">
+    @using (Html.BeginForm("LuongMonthStats", "ThongKe", FormMethod.Get))
+    {
+        <span>Từ tháng </span><input id="fromdate" name="fromdate" type="date" />
+        <span>Đến tháng </span><input id="todate" name="todate" type="date" />
+        <input type="submit" value="Lọc" class="btn btn-success" />
+    }
+</div>
+<div>
+    @using (Html.BeginForm("LuongMonthExport", "ThongKe", FormMethod.Post))
+    {
+        <input type="submit" value="Xuất file thống kê" class="btn btn-primary" />
+        <input name="fromdate" type="hidden" value="@ViewBag.fromdate" />
+        <input name="todate" type="hidden" value="@ViewBag.todate" />
+    }
+</div>
+<br />
+<div>
+    <canvas id="luongMonth"></canvas>
+</div>
+<br />
+<table class="table text-center">
+    <tr>
+        <th class="text-center">Tháng</th>
+        <th class="text-center">Tổng tiền lương</th>
+    </tr>
+    @foreach (var item in (IEnumerable<QLNhanSu.Models.ThongKeLuong>)ViewBag.luong)
+    {
+<tr>
+    <td>@item.month/@item.year</td>
+    <td>@String.Format("{0:0,### đồng}", ((long)item.sum))</td>
+    
+</tr>
+    }
+</table>

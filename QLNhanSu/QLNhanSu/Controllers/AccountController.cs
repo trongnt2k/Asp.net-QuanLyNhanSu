@@ -79,7 +79,12 @@ namespace QLNhanSu.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                {
+                    if(User.IsInRole("Users"))
+                        return RedirectToLocal(returnUrl);
+                    else
+                        return RedirectToAction("Index", "Admin", null);
+                }    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
